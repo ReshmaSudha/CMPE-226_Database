@@ -1,0 +1,95 @@
+<!-- This file gets included by index.php -->
+<form action="" method="get">
+    <fieldset>
+        <legend>Student Info</legend>
+
+        <p>
+            <label>First name:</label>
+            <input name="first_name" type="text">
+        </p>
+        <p>
+            <label>Last name:</label>
+            <input name="last_name" type="text">
+        </p>
+        <p>
+            <label>Student Id:</label>
+            <input name="student_id" type="text">
+        </p>
+        <p>
+            <label>Department</label>
+            <input type="radio"
+                   name="dept"
+                   value="Computer Science"
+                   checked> Computer Science
+            <input type="radio"
+                   name="dept"
+                   value="Software Engineering">Software Engineering
+            <input type="radio"
+                   name="dept"
+                   value="Mechanical Engineering">Mechanical Engineering
+            <input type="radio"
+                   name="dept"
+                   value="General Engineering">General Engineering
+        </p>
+
+        <p>
+            <label>Courses</label>
+            <input type="checkbox"
+                   name="courses[]"
+                   value="226">Cmpe226
+            <input type="checkbox"
+                   name="courses[]"
+                   value="273">Cmpe273
+            <input type="checkbox"
+                   name="courses[]"
+                   value="280">Cmpe280
+            <input type="checkbox"
+                   name="courses[]"
+                   value="275">Cmpe275
+            <input type="checkbox"
+                   name="courses[]"
+                   value="202">Cmpe202
+            <input type="checkbox"
+                   name="courses[]"
+                   value="206">Cmpe206
+            <input type="checkbox"
+                   name="courses[]"
+                   value="287">Cmpe287
+            <input type="checkbox"
+                   name="courses[]"
+                   value="250">Cmpe250
+            <input type="checkbox"
+                   name="courses[]"
+                   value="203">Cmpe203
+        </p>
+        <p>
+            <label>Programming Languages</label>
+            <input type="checkbox"
+                   name="p_langs[]"
+                   value="java">JAVA
+            <input type="checkbox"
+                   name="p_langs[]"
+                   value="c">C
+            <input type="checkbox"
+                   name="p_langs[]"
+                   value="python">PYTHON
+            <input type="checkbox"
+                   name="p_langs[]"
+                   value="c++">C++
+            <input type="checkbox"
+                   name="p_langs[]"
+                   value="go">GO
+            <input type="checkbox"
+                   name="p_langs[]"
+                   value="php">PHP
+            <input type="checkbox"
+                   name="p_langs[]"
+                   value="ajax">AJAX
+        </p>
+
+
+        <p>
+            <input type="submit" value="Search">
+        </p>
+    </fieldset>
+</form>

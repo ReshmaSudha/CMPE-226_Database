@@ -1,0 +1,21 @@
+<!DOCTYPE HTML> 
+<html>
+	<body>
+		<form id="testForm" action="OrderSearchDB.php" method="get">
+			Enter CustomerID: <input type="text" id="customerid" name="customerid"><br><br>
+			<input type="button" onclick="validate()" value="Search">
+		</form>
+		<script> 
+			function validate() {
+				if(document.getElementById("customerid").value == "")
+				{
+					alert("Please enter customer id");
+				} 
+				else 
+				{
+					document.getElementById("testForm").submit();
+				}
+			}
+		</script>
+	</body>
+</html>

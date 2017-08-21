@@ -1,0 +1,438 @@
+-- MySQL dump 10.16  Distrib 10.1.9-MariaDB, for Linux (x86_64)
+--
+-- Host: localhost    Database: cmpe226a3
+-- ------------------------------------------------------
+-- Server version	10.1.9-MariaDB
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Current Database: `cmpe226a3`
+--
+
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `cmpe226a3` /*!40100 DEFAULT CHARACTER SET latin1 */;
+
+USE `cmpe226a3`;
+
+--
+-- Table structure for table `ADDRESSABLECONTACT`
+--
+
+DROP TABLE IF EXISTS `ADDRESSABLECONTACT`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ADDRESSABLECONTACT` (
+  `AddressableContactId` int(11) NOT NULL AUTO_INCREMENT,
+  `FirstName` varchar(255) DEFAULT NULL,
+  `LastName` varchar(255) DEFAULT NULL,
+  `Email` varchar(255) DEFAULT NULL,
+  `StreetAddress` varchar(255) DEFAULT NULL,
+  `CustomerId` int(11) DEFAULT NULL,
+  `ZipcodeId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`AddressableContactId`),
+  KEY `ADDRESSABLECONTACT_CUSTOMER_CustomerId_fk` (`CustomerId`),
+  KEY `ADDRESSABLECONTACT_ZIPCODE_ZipcodeId_fk` (`ZipcodeId`),
+  CONSTRAINT `ADDRESSABLECONTACT_CUSTOMER_CustomerId_fk` FOREIGN KEY (`CustomerId`) REFERENCES `CUSTOMER` (`CustomerId`),
+  CONSTRAINT `ADDRESSABLECONTACT_ZIPCODE_ZipcodeId_fk` FOREIGN KEY (`ZipcodeId`) REFERENCES `ZIPCODE` (`ZipcodeId`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ADDRESSABLECONTACT`
+--
+
+LOCK TABLES `ADDRESSABLECONTACT` WRITE;
+/*!40000 ALTER TABLE `ADDRESSABLECONTACT` DISABLE KEYS */;
+INSERT INTO `ADDRESSABLECONTACT` VALUES (1,'chris','rehfeld','rehfeldchris@gmail.com','1234 fake street',1,1),(2,'john','doe','jdoe@yahoo.com','555B void blvd',2,2),(3,'john','doe','jdoe55@gmail.com','554A void blvd',2,2);
+/*!40000 ALTER TABLE `ADDRESSABLECONTACT` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `BRAND`
+--
+
+DROP TABLE IF EXISTS `BRAND`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `BRAND` (
+  `BrandId` int(11) NOT NULL AUTO_INCREMENT,
+  `BrandName` varchar(255) NOT NULL,
+  PRIMARY KEY (`BrandId`),
+  UNIQUE KEY `BRAND_BrandName_uindex` (`BrandName`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `BRAND`
+--
+
+LOCK TABLES `BRAND` WRITE;
+/*!40000 ALTER TABLE `BRAND` DISABLE KEYS */;
+INSERT INTO `BRAND` VALUES (1,'Apple'),(5,'Ford'),(4,'Honda'),(3,'HTC'),(2,'Samsung');
+/*!40000 ALTER TABLE `BRAND` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `CATEGORY`
+--
+
+DROP TABLE IF EXISTS `CATEGORY`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `CATEGORY` (
+  `CategoryId` int(11) NOT NULL AUTO_INCREMENT,
+  `CategoryName` varchar(255) NOT NULL,
+  PRIMARY KEY (`CategoryId`),
+  UNIQUE KEY `CATEGORY_CategoryName_uindex` (`CategoryName`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `CATEGORY`
+--
+
+LOCK TABLES `CATEGORY` WRITE;
+/*!40000 ALTER TABLE `CATEGORY` DISABLE KEYS */;
+INSERT INTO `CATEGORY` VALUES (2,'Automobiles'),(1,'Electronics');
+/*!40000 ALTER TABLE `CATEGORY` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `CITY`
+--
+
+DROP TABLE IF EXISTS `CITY`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `CITY` (
+  `CityId` int(11) NOT NULL AUTO_INCREMENT,
+  `CityName` varchar(255) NOT NULL,
+  `StateId` int(11) NOT NULL,
+  PRIMARY KEY (`CityId`),
+  KEY `CITY_STATE_StateId_fk` (`StateId`),
+  CONSTRAINT `CITY_STATE_StateId_fk` FOREIGN KEY (`StateId`) REFERENCES `STATE` (`StateId`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `CITY`
+--
+
+LOCK TABLES `CITY` WRITE;
+/*!40000 ALTER TABLE `CITY` DISABLE KEYS */;
+INSERT INTO `CITY` VALUES (1,'San Jose',1),(2,'San Carlos',1);
+/*!40000 ALTER TABLE `CITY` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `CONTACTPHONE`
+--
+
+DROP TABLE IF EXISTS `CONTACTPHONE`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `CONTACTPHONE` (
+  `PhoneNumber` varchar(20) NOT NULL,
+  `AddressableContactId` int(11) NOT NULL,
+  PRIMARY KEY (`PhoneNumber`,`AddressableContactId`),
+  KEY `CONTACTPHONE_ADDRESSABLECONTACT_AddressableContactId_fk` (`AddressableContactId`),
+  CONSTRAINT `CONTACTPHONE_ADDRESSABLECONTACT_AddressableContactId_fk` FOREIGN KEY (`AddressableContactId`) REFERENCES `ADDRESSABLECONTACT` (`AddressableContactId`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `CONTACTPHONE`
+--
+
+LOCK TABLES `CONTACTPHONE` WRITE;
+/*!40000 ALTER TABLE `CONTACTPHONE` DISABLE KEYS */;
+INSERT INTO `CONTACTPHONE` VALUES ('4085551234',1),('4156587452',2),('4157896541',2);
+/*!40000 ALTER TABLE `CONTACTPHONE` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `CUSTOMER`
+--
+
+DROP TABLE IF EXISTS `CUSTOMER`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `CUSTOMER` (
+  `CustomerId` int(11) NOT NULL AUTO_INCREMENT,
+  `UserName` varchar(255) NOT NULL,
+  `PasswordHash` varchar(128) NOT NULL,
+  PRIMARY KEY (`CustomerId`),
+  UNIQUE KEY `CUSTOMER_UserName_uindex` (`UserName`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `CUSTOMER`
+--
+
+LOCK TABLES `CUSTOMER` WRITE;
+/*!40000 ALTER TABLE `CUSTOMER` DISABLE KEYS */;
+INSERT INTO `CUSTOMER` VALUES (1,'chrisr','1f40fc92da241694750979ee6cf582f2d5d7d28e18335de05abc54d0560e0f5302860c652bf08d560252aa5e74210546f369fbbbce8c12cfc7957b2652fe9a75'),(2,'jdoe','1f40fc92da241694750979ee6cf582f2d5d7d28e18335de05abc54d0560e0f5302860c652bf08d560252aa5e74210546f369fbbbce8c12cfc7957b2652fe9a75');
+/*!40000 ALTER TABLE `CUSTOMER` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ORDER`
+--
+
+DROP TABLE IF EXISTS `ORDER`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ORDER` (
+  `OrderId` int(11) NOT NULL AUTO_INCREMENT,
+  `OrderStatus` varchar(20) NOT NULL,
+  `OrderDate` datetime NOT NULL,
+  `CustomerId` int(11) NOT NULL,
+  `AddressableContactId` int(11) NOT NULL,
+  `PaymentId` int(11) NOT NULL,
+  PRIMARY KEY (`OrderId`),
+  KEY `ORDER_CUSTOMER_CustomerId_fk` (`CustomerId`),
+  KEY `ORDER_ADDRESSABLECONTACT_AddressableContactId_fk` (`AddressableContactId`),
+  KEY `ORDER_PAYMENT_PaymentId_fk` (`PaymentId`),
+  CONSTRAINT `ORDER_ADDRESSABLECONTACT_AddressableContactId_fk` FOREIGN KEY (`AddressableContactId`) REFERENCES `ADDRESSABLECONTACT` (`AddressableContactId`),
+  CONSTRAINT `ORDER_CUSTOMER_CustomerId_fk` FOREIGN KEY (`CustomerId`) REFERENCES `CUSTOMER` (`CustomerId`),
+  CONSTRAINT `ORDER_PAYMENT_PaymentId_fk` FOREIGN KEY (`PaymentId`) REFERENCES `PAYMENT` (`PaymentId`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ORDER`
+--
+
+LOCK TABLES `ORDER` WRITE;
+/*!40000 ALTER TABLE `ORDER` DISABLE KEYS */;
+INSERT INTO `ORDER` VALUES (1,'shipped','2016-03-01 19:51:22',2,2,1);
+/*!40000 ALTER TABLE `ORDER` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ORDERLINE`
+--
+
+DROP TABLE IF EXISTS `ORDERLINE`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ORDERLINE` (
+  `LineNumber` int(11) NOT NULL,
+  `OrderId` int(11) NOT NULL,
+  `Quantity` mediumint(9) NOT NULL,
+  `PriceWhenPurchased` decimal(10,2) NOT NULL,
+  `ProductId` int(11) NOT NULL,
+  PRIMARY KEY (`LineNumber`,`OrderId`),
+  KEY `ORDERLINE_ORDER_OrderId_fk` (`OrderId`),
+  KEY `ORDERLINE_PRODUCT_ProductId_fk` (`ProductId`),
+  CONSTRAINT `ORDERLINE_ORDER_OrderId_fk` FOREIGN KEY (`OrderId`) REFERENCES `ORDER` (`OrderId`),
+  CONSTRAINT `ORDERLINE_PRODUCT_ProductId_fk` FOREIGN KEY (`ProductId`) REFERENCES `PRODUCT` (`ProductId`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ORDERLINE`
+--
+
+LOCK TABLES `ORDERLINE` WRITE;
+/*!40000 ALTER TABLE `ORDERLINE` DISABLE KEYS */;
+INSERT INTO `ORDERLINE` VALUES (1,1,2,599.99,1),(2,1,1,699.99,2);
+/*!40000 ALTER TABLE `ORDERLINE` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `PAYMENT`
+--
+
+DROP TABLE IF EXISTS `PAYMENT`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `PAYMENT` (
+  `PaymentId` int(11) NOT NULL AUTO_INCREMENT,
+  `AuthCode` varchar(100) NOT NULL,
+  `AddressableContactId` int(11) NOT NULL,
+  `CustomerId` int(11) NOT NULL,
+  `PaymentAmount` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`PaymentId`),
+  KEY `PAYMENT_ADDRESSABLECONTACT_AddressableContactId_fk` (`AddressableContactId`),
+  KEY `PAYMENT_CUSTOMER_CustomerId_fk` (`CustomerId`),
+  CONSTRAINT `PAYMENT_ADDRESSABLECONTACT_AddressableContactId_fk` FOREIGN KEY (`AddressableContactId`) REFERENCES `ADDRESSABLECONTACT` (`AddressableContactId`),
+  CONSTRAINT `PAYMENT_CUSTOMER_CustomerId_fk` FOREIGN KEY (`CustomerId`) REFERENCES `CUSTOMER` (`CustomerId`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `PAYMENT`
+--
+
+LOCK TABLES `PAYMENT` WRITE;
+/*!40000 ALTER TABLE `PAYMENT` DISABLE KEYS */;
+INSERT INTO `PAYMENT` VALUES (1,'s56d5f',3,2,1899.97);
+/*!40000 ALTER TABLE `PAYMENT` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `PRODUCT`
+--
+
+DROP TABLE IF EXISTS `PRODUCT`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `PRODUCT` (
+  `ProductId` int(11) NOT NULL AUTO_INCREMENT,
+  `ProductName` varchar(255) NOT NULL,
+  `Description` text NOT NULL,
+  `ImageUrl` varchar(1024) DEFAULT NULL,
+  `Model` varchar(255) NOT NULL,
+  `Price` decimal(10,2) NOT NULL,
+  `SubCategoryId` int(11) DEFAULT NULL,
+  `BrandId` int(11) NOT NULL,
+  PRIMARY KEY (`ProductId`),
+  KEY `PRODUCT_SUBCATEGORY_SubCategoryId_fk` (`SubCategoryId`),
+  KEY `PRODUCT_BRAND_BrandId_fk` (`BrandId`),
+  CONSTRAINT `PRODUCT_BRAND_BrandId_fk` FOREIGN KEY (`BrandId`) REFERENCES `BRAND` (`BrandId`),
+  CONSTRAINT `PRODUCT_SUBCATEGORY_SubCategoryId_fk` FOREIGN KEY (`SubCategoryId`) REFERENCES `SUBCATEGORY` (`SubCategoryId`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `PRODUCT`
+--
+
+LOCK TABLES `PRODUCT` WRITE;
+/*!40000 ALTER TABLE `PRODUCT` DISABLE KEYS */;
+INSERT INTO `PRODUCT` VALUES (1,'iPhone 6s 32gb','brand new 32gb iphone 6s','iphone6s32.jpg','iphone6s32',599.99,1,1),(2,'galaxy s7','brand new galaxy s7 64gb','galaxys764.jpg','galaxys7',699.99,1,2),(3,'s2000','grey 2016 honda s2000','grey-s2000.jpg','s2000-g-2016',49999.99,3,4),(4,'Crossover','2016 Red Ford Crossover SUV','Fr16c.jpg','fr16c',59999.99,4,5);
+/*!40000 ALTER TABLE `PRODUCT` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `REVIEW`
+--
+
+DROP TABLE IF EXISTS `REVIEW`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `REVIEW` (
+  `ReviewId` int(11) NOT NULL AUTO_INCREMENT,
+  `Rating` tinyint(4) NOT NULL,
+  `ReviewComment` text,
+  `CustomerId` int(11) NOT NULL,
+  `ProductId` int(11) NOT NULL,
+  PRIMARY KEY (`ReviewId`),
+  KEY `REVIEW_PRODUCT_ProductId_fk` (`ProductId`),
+  CONSTRAINT `REVIEW_CUSTOMER_CustomerId_fk` FOREIGN KEY (`ReviewId`) REFERENCES `CUSTOMER` (`CustomerId`),
+  CONSTRAINT `REVIEW_PRODUCT_ProductId_fk` FOREIGN KEY (`ProductId`) REFERENCES `PRODUCT` (`ProductId`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `REVIEW`
+--
+
+LOCK TABLES `REVIEW` WRITE;
+/*!40000 ALTER TABLE `REVIEW` DISABLE KEYS */;
+INSERT INTO `REVIEW` VALUES (1,5,'OMFG THIS IS THE BESTEST PHONE EVAR!',2,1),(2,1,'bad battery life',2,2);
+/*!40000 ALTER TABLE `REVIEW` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `STATE`
+--
+
+DROP TABLE IF EXISTS `STATE`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `STATE` (
+  `StateId` int(11) NOT NULL AUTO_INCREMENT,
+  `StateName` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`StateId`),
+  UNIQUE KEY `STATE_StateName_uindex` (`StateName`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `STATE`
+--
+
+LOCK TABLES `STATE` WRITE;
+/*!40000 ALTER TABLE `STATE` DISABLE KEYS */;
+INSERT INTO `STATE` VALUES (1,'California'),(2,'Nevada');
+/*!40000 ALTER TABLE `STATE` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `SUBCATEGORY`
+--
+
+DROP TABLE IF EXISTS `SUBCATEGORY`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `SUBCATEGORY` (
+  `SubCategoryId` int(11) NOT NULL AUTO_INCREMENT,
+  `SubCategoryName` varchar(255) NOT NULL,
+  `CategoryId` int(11) NOT NULL,
+  PRIMARY KEY (`SubCategoryId`),
+  UNIQUE KEY `SUBCATEGORY_SubCategoryName_uindex` (`SubCategoryName`),
+  KEY `SUBCATEGORY_CATEGORY_CategoryId_fk` (`CategoryId`),
+  CONSTRAINT `SUBCATEGORY_CATEGORY_CategoryId_fk` FOREIGN KEY (`CategoryId`) REFERENCES `CATEGORY` (`CategoryId`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `SUBCATEGORY`
+--
+
+LOCK TABLES `SUBCATEGORY` WRITE;
+/*!40000 ALTER TABLE `SUBCATEGORY` DISABLE KEYS */;
+INSERT INTO `SUBCATEGORY` VALUES (1,'Cell Phones',1),(2,'Computers',1),(3,'Sports Cars',2),(4,'Sport Utility Vehicles',2);
+/*!40000 ALTER TABLE `SUBCATEGORY` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ZIPCODE`
+--
+
+DROP TABLE IF EXISTS `ZIPCODE`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ZIPCODE` (
+  `ZipcodeId` int(11) NOT NULL AUTO_INCREMENT,
+  `Zipcode` char(10) NOT NULL,
+  `CityId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`ZipcodeId`),
+  UNIQUE KEY `ZIPCODE_Zipcode_uindex` (`Zipcode`),
+  KEY `ZIPCODE_CITY_CityId_fk` (`CityId`),
+  CONSTRAINT `ZIPCODE_CITY_CityId_fk` FOREIGN KEY (`CityId`) REFERENCES `CITY` (`CityId`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ZIPCODE`
+--
+
+LOCK TABLES `ZIPCODE` WRITE;
+/*!40000 ALTER TABLE `ZIPCODE` DISABLE KEYS */;
+INSERT INTO `ZIPCODE` VALUES (1,'95141',1),(2,'95101',1),(3,'94070',2);
+/*!40000 ALTER TABLE `ZIPCODE` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2016-03-01 22:35:54
